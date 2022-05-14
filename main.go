@@ -27,16 +27,27 @@ func randomizer() {
 
 	correctA := numberX * numberY
 
-	fmt.Printf("%v x %v =", numberX, numberY)
+	mathProblem := fmt.Sprintf("%v x %v = ", numberX, numberY)
+
+	fmt.Println(mathProblem)
 
 	var answer int
 	fmt.Scan(&answer)
 
-	if answer = correctA {
+	for {
 
+		if answer == correctA {
+			fmt.Println("Correct")
+			//for score := 0; score < 10; score++ {
+				fmt.Println(score)
+			}
 
+			randomizer()
+		} else {
+			fmt.Println("Try again")
+			fmt.Println(mathProblem)
+			fmt.Scan(&answer)
+		}
 	}
-
-	fmt.Println(correctA)
 
 }
