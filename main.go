@@ -34,14 +34,11 @@ func randomizer() {
 	var answer int
 	fmt.Scan(&answer)
 
-	for {
+	for i := 0; i < 100; i++ {
 
 		if answer == correctA {
 			fmt.Println("Correct")
-			//for score := 0; score < 10; score++ {
-				fmt.Println(score)
-			}
-
+			fmt.Println(i)
 			randomizer()
 		} else {
 			fmt.Println("Try again")
@@ -49,5 +46,4 @@ func randomizer() {
 			fmt.Scan(&answer)
 		}
 	}
-
 }
