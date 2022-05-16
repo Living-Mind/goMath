@@ -1,15 +1,44 @@
 package main
 
+//47m
+
 import (
 	"fmt"
 	"math/rand"
 	"time"
 )
 
+var numberX int
+var numberY int
+var answer int
+var end int
+
 func main() {
 
 	fmt.Println("Math Trainer")
-	randomizer()
+	go timer()
+	// randomizer()
+	//fmt.Println("x and y", numberX, numberY)
+	//mathProblem()
+	end = 0
+	fmt.Println(end)
+
+	for i := 0; i < 100; i++ {
+
+		if end == 0 {
+
+			randomizer()
+			mathProblem()
+			fmt.Println(i)
+		} else {
+
+			fmt.Printf("Score: %v\n", i)
+			break
+
+		}
+
+	}
+
 }
 
 func randomizer() {
@@ -19,31 +48,45 @@ func randomizer() {
 
 	// Value X
 	var randValue int = rand.Intn(len(xArray))
-	var numberX int = xArray[randValue]
+	numberX = xArray[randValue]
 
 	// Value Y
 	var randValueY int = rand.Intn(len(xArray))
-	var numberY int = xArray[randValueY]
+	numberY = xArray[randValueY]
+}
 
-	correctA := numberX * numberY
+func mathProblem() {
 
-	mathProblem := fmt.Sprintf("%v x %v = ", numberX, numberY)
+	mathProblemVar := fmt.Sprintf("%v x %v = ", numberX, numberY)
 
-	fmt.Println(mathProblem)
+	fmt.Println(mathProblemVar)
 
-	var answer int
 	fmt.Scan(&answer)
 
-	for i := 0; i < 100; i++ {
+	test()
+}
 
-		if answer == correctA {
-			fmt.Println("Correct")
-			fmt.Println(i)
-			randomizer()
-		} else {
-			fmt.Println("Try again")
-			fmt.Println(mathProblem)
-			fmt.Scan(&answer)
-		}
+func test() {
+
+	correctAnswer := numberX * numberY
+
+	if answer == correctAnswer {
+
+		fmt.Println("Correct")
+
+	} else {
+		fmt.Println("Try again")
+		mathProblem()
 	}
+}
+
+func timer() {
+
+	fmt.Println("Before Timer")
+	time.Sleep(45 * time.Second)
+
+	fmt.Println("After Timer")
+
+	end = 1
+
 }
