@@ -1,7 +1,5 @@
 package main
 
-//47m
-
 import (
 	"fmt"
 	"math/rand"
@@ -16,29 +14,61 @@ var end int
 func main() {
 
 	fmt.Println("Math Trainer")
+	modeSelect()
+}
+
+func loopOperation(modeNum int) {
+
+	fmt.Println(modeNum)
+
 	go timer()
-	// randomizer()
-	//fmt.Println("x and y", numberX, numberY)
-	//mathProblem()
+
 	end = 0
-	fmt.Println(end)
+	//fmt.Printf("Indicator %v\n", end)
 
 	for i := 0; i < 100; i++ {
 
 		if end == 0 {
 
 			randomizer()
-			mathProblem()
-			fmt.Println(i)
+			showMathProblem(modeNum)
+
+			//fmt.Println(i)
 		} else {
 
+			fmt.Println("Time ended.")
 			fmt.Printf("Score: %v\n", i)
 			break
-
 		}
-
 	}
+}
 
+func modeSelect() {
+
+	var selection int
+	fmt.Println("Select Mode Type: 1)Addition 2)Subtraction 3)Multiplication 4)Division")
+	fmt.Scan(&selection)
+
+	switch selection {
+	case 1:
+		fmt.Println("Option1")
+		loopOperation(1)
+
+	case 2:
+		fmt.Println("Option2")
+		loopOperation(2)
+
+	case 3:
+		fmt.Println("Option3")
+		loopOperation(3)
+
+	case 4:
+		fmt.Println("Option4")
+		loopOperation(4)
+
+	default:
+		fmt.Println("Not an option.")
+	}
 }
 
 func randomizer() {
@@ -55,20 +85,32 @@ func randomizer() {
 	numberY = xArray[randValueY]
 }
 
-func mathProblem() {
-
-	mathProblemVar := fmt.Sprintf("%v x %v = ", numberX, numberY)
-
-	fmt.Println(mathProblemVar)
+func showMathProblem(modeNum int) {
+	switch modeNum {
+	case 1:
+		fmt.Printf("%v + %v = ", numberX, numberY)
+	case 2:
+		fmt.Printf("%v - %v = ", numberX, numberY)
+	case 3:
+		fmt.Printf("%v x %v = ", numberX, numberY)
+	case 4:
+		fmt.Printf("%v / %v = ", numberX, numberY)
+	}
 
 	fmt.Scan(&answer)
 
-	test()
+	checkInput(modeNum)
 }
 
-func test() {
+func checkInput(modeNum int) {
+	var correctAnswer int
 
-	correctAnswer := numberX * numberY
+	switch modeNum {
+	case 1:
+		correctAnswer := numberX * numberY
+		return correctAnswer
+
+	}
 
 	if answer == correctAnswer {
 
@@ -76,17 +118,12 @@ func test() {
 
 	} else {
 		fmt.Println("Try again")
-		mathProblem()
+		showMathProblem(modeNum)
 	}
 }
 
 func timer() {
 
-	fmt.Println("Before Timer")
-	time.Sleep(45 * time.Second)
-
-	fmt.Println("After Timer")
-
+	time.Sleep(10 * time.Second)
 	end = 1
-
 }
