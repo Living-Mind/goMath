@@ -10,9 +10,9 @@ var numberX int
 var numberY int
 var answer int
 var end int
+var correctAnswer int
 
 func main() {
-
 	fmt.Println("Math Trainer")
 	modeSelect()
 }
@@ -24,18 +24,14 @@ func loopOperation(modeNum int) {
 	go timer()
 
 	end = 0
-	//fmt.Printf("Indicator %v\n", end)
 
 	for i := 0; i < 100; i++ {
 
 		if end == 0 {
-
 			randomizer()
 			showMathProblem(modeNum)
 
-			//fmt.Println(i)
 		} else {
-
 			fmt.Println("Time ended.")
 			fmt.Printf("Score: %v\n", i)
 			break
@@ -53,26 +49,21 @@ func modeSelect() {
 	case 1:
 		fmt.Println("Option1")
 		loopOperation(1)
-
 	case 2:
 		fmt.Println("Option2")
 		loopOperation(2)
-
 	case 3:
 		fmt.Println("Option3")
 		loopOperation(3)
-
 	case 4:
 		fmt.Println("Option4")
 		loopOperation(4)
-
 	default:
 		fmt.Println("Not an option.")
 	}
 }
 
 func randomizer() {
-
 	rand.Seed(time.Now().UnixNano())
 	var xArray = [8]int{2, 3, 4, 5, 6, 7, 8, 9}
 
@@ -86,15 +77,20 @@ func randomizer() {
 }
 
 func showMathProblem(modeNum int) {
+
 	switch modeNum {
 	case 1:
 		fmt.Printf("%v + %v = ", numberX, numberY)
+		correctAnswer = numberX + numberY
 	case 2:
 		fmt.Printf("%v - %v = ", numberX, numberY)
+		correctAnswer = numberX - numberY
 	case 3:
 		fmt.Printf("%v x %v = ", numberX, numberY)
+		correctAnswer = numberX * numberY
 	case 4:
 		fmt.Printf("%v / %v = ", numberX, numberY)
+		correctAnswer = numberX / numberY
 	}
 
 	fmt.Scan(&answer)
@@ -103,17 +99,8 @@ func showMathProblem(modeNum int) {
 }
 
 func checkInput(modeNum int) {
-	var correctAnswer int
-
-	switch modeNum {
-	case 1:
-		correctAnswer := numberX * numberY
-		return correctAnswer
-
-	}
 
 	if answer == correctAnswer {
-
 		fmt.Println("Correct")
 
 	} else {
