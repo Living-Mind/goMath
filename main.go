@@ -28,7 +28,7 @@ func loopOperation(modeNum int) {
 	for i := 0; i < 100; i++ {
 
 		if end == 0 {
-			randomizer()
+			randomizer(modeNum)
 			showMathProblem(modeNum)
 
 		} else {
@@ -60,20 +60,30 @@ func modeSelect() {
 		loopOperation(4)
 	default:
 		fmt.Println("Not an option.")
+		modeSelect()
 	}
 }
 
-func randomizer() {
+func randomizer(modeNum int) {
 	rand.Seed(time.Now().UnixNano())
-	var xArray = [8]int{2, 3, 4, 5, 6, 7, 8, 9}
 
-	// Value X
-	var randValue int = rand.Intn(len(xArray))
-	numberX = xArray[randValue]
+	if modeNum <= 2 {
+		// Value X (addition || subtraction)
+		numberX = rand.Intn(100)
 
-	// Value Y
-	var randValueY int = rand.Intn(len(xArray))
-	numberY = xArray[randValueY]
+		// Value Y (addition || subtraction)
+		numberY = rand.Intn(100)
+	} else {
+		var xArray = [8]int{2, 3, 4, 5, 6, 7, 8, 9}
+
+		// Value X (miltiplication || division)
+		var randValue int = rand.Intn(len(xArray))
+		numberX = xArray[randValue]
+
+		// Value Y (miltiplication || division)
+		var randValueY int = rand.Intn(len(xArray))
+		numberY = xArray[randValueY]
+	}
 }
 
 func showMathProblem(modeNum int) {
@@ -89,12 +99,13 @@ func showMathProblem(modeNum int) {
 		fmt.Printf("%v x %v = ", numberX, numberY)
 		correctAnswer = numberX * numberY
 	case 4:
-		fmt.Printf("%v / %v = ", numberX, numberY)
-		correctAnswer = numberX / numberY
+		//Multiply then divide
+		numberZ := numberX * numberY
+		fmt.Printf("%v / %v = ", numberZ, numberY)
+		correctAnswer = numberZ / numberY
 	}
 
 	fmt.Scan(&answer)
-
 	checkInput(modeNum)
 }
 
@@ -110,7 +121,6 @@ func checkInput(modeNum int) {
 }
 
 func timer() {
-
 	time.Sleep(10 * time.Second)
 	end = 1
 }
