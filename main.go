@@ -1,8 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"log"
 	"math/rand"
+	"os"
+	"strconv"
 	"time"
 )
 
@@ -14,12 +18,11 @@ var correctAnswer int
 
 func main() {
 	fmt.Println("Math Trainer")
+
 	modeSelect()
 }
 
 func loopOperation(modeNum int) {
-
-	fmt.Println(modeNum)
 
 	go timer()
 
@@ -33,7 +36,45 @@ func loopOperation(modeNum int) {
 
 		} else {
 			fmt.Println("Time ended.")
-			fmt.Printf("Score: %v\n", i)
+			fmt.Printf("Your Score: %v\n", i)
+
+			dataInFile2, err := os.Open("Best_score")
+			if err != nil {
+				fmt.Println("Your very first score was added.")
+				createScoreFile(i)
+				break
+			}
+
+			scanner := bufio.NewScanner(dataInFile2)
+
+			scanner.Scan()
+
+			outputString := scanner.Text()
+
+			outputInt, err := strconv.Atoi(outputString)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			if i <= outputInt {
+				fmt.Printf("Best Score: %v\n", outputInt)
+			} else {
+				fmt.Println("#########################")
+				fmt.Printf("#  New Best Score : %v  #\n", i)
+				fmt.Println("#########################")
+
+				scoreFile, err := os.Create("Best_score")
+				if err != nil {
+					log.Fatal(err)
+				}
+				defer scoreFile.Close()
+
+				_, err2 := scoreFile.WriteString(fmt.Sprintf("%d", i))
+				if err2 != nil {
+					fmt.Println("error")
+				}
+				defer scoreFile.Close()
+			}
 			break
 		}
 	}
@@ -121,6 +162,21 @@ func checkInput(modeNum int) {
 }
 
 func timer() {
-	time.Sleep(10 * time.Second)
+	time.Sleep(30 * time.Second)
 	end = 1
+}
+
+func createScoreFile(i int) {
+	scoreFile, err := os.OpenFile("Best_score", os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer scoreFile.Close()
+
+	//_, err2 := scoreFile.WriteString("0")
+	_, err2 := scoreFile.WriteString(fmt.Sprintf("%d", i))
+	if err2 != nil {
+		fmt.Println("error")
+	}
+	defer scoreFile.Close()
 }
