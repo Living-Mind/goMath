@@ -15,8 +15,10 @@ var numberY int
 var answer int
 var end int
 var correctAnswer int
+var customTime int
 
 func main() {
+	customTime = 30
 	fmt.Println("Math Trainer")
 
 	modeSelect()
@@ -83,22 +85,28 @@ func loopOperation(modeNum int) {
 func modeSelect() {
 
 	var selection int
-	fmt.Println("Select Mode Type: 1)Addition 2)Subtraction 3)Multiplication 4)Division")
+
+	fmt.Println("Select Mode Type: 1)Addition 2)Subtraction 3)Multiplication 4)Division 5)Set custom time (default time = 30s)")
 	fmt.Scan(&selection)
 
 	switch selection {
 	case 1:
-		fmt.Println("Option1")
+		fmt.Println("Mode: Addition")
 		loopOperation(1)
 	case 2:
-		fmt.Println("Option2")
+		fmt.Println("Mode: Subtraction")
 		loopOperation(2)
 	case 3:
-		fmt.Println("Option3")
+		fmt.Println("Mode: Multiplication")
 		loopOperation(3)
 	case 4:
-		fmt.Println("Option4")
+		fmt.Println("Mode: Division")
 		loopOperation(4)
+	case 5:
+		fmt.Println("Insert custom time (in seconds):")
+		fmt.Scan(&customTime)
+		fmt.Printf("Time set to %v sec.\n", customTime)
+		modeSelect()
 	default:
 		fmt.Println("Not an option.")
 		modeSelect()
@@ -162,7 +170,7 @@ func checkInput(modeNum int) {
 }
 
 func timer() {
-	time.Sleep(30 * time.Second)
+	time.Sleep(time.Duration(customTime) * time.Second)
 	end = 1
 }
 
