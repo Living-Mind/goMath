@@ -19,8 +19,7 @@ var customTime int
 
 func main() {
 	customTime = 30
-	fmt.Println("Math Trainer")
-
+	fmt.Println("Math Trainer\n--------------------------")
 	modeSelect()
 }
 
@@ -37,7 +36,7 @@ func loopOperation(modeNum int) {
 			showMathProblem(modeNum)
 
 		} else {
-			fmt.Println("Time ended.")
+			fmt.Println("Time ended.\n--------------------------")
 			fmt.Printf("Your Score: %v\n", i)
 
 			dataInFile2, err := os.Open("Best_score")
@@ -86,8 +85,9 @@ func modeSelect() {
 
 	var selection int
 
-	fmt.Println("Select Mode Type: 1)Addition 2)Subtraction 3)Multiplication 4)Division 5)Set custom time (default time = 30s)")
+	fmt.Println("Select Mode Type:\n 1)Addition\n 2)Subtraction\n 3)Multiplication\n 4)Division\n\nOther Options:\n 5)Set custom time (default time = 30s)")
 	fmt.Scan(&selection)
+	fmt.Println("--------------------------")
 
 	switch selection {
 	case 1:
@@ -181,7 +181,6 @@ func createScoreFile(i int) {
 	}
 	defer scoreFile.Close()
 
-	//_, err2 := scoreFile.WriteString("0")
 	_, err2 := scoreFile.WriteString(fmt.Sprintf("%d", i))
 	if err2 != nil {
 		fmt.Println("error")
